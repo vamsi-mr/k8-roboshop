@@ -16,7 +16,6 @@ data:
   AMQP_HOST: "rabbitmq"
 
 ---
-
 ### Secret
 apiVersion: v1
 kind: Secret
