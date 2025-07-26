@@ -44,5 +44,5 @@ spec:
     tier: database
   ports:
     - protocol: TCP 
-      ports: 27017
+      port: 27017
       targetPort: 27017
