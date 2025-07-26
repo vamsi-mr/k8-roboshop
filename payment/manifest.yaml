@@ -21,14 +21,15 @@ apiVersion: v1
 kind: Secret
 metadata: 
   name: payment
+  namespace: roboshop
   labels:
     component: payment
     project: roboshop
     tier: app
 type: Opaque
 data: 
-  AMQP_USER: "cm9ib3Nob3A="
-  AMQP_PASS: "cm9ib3Nob3AxMjM="
+  AMQP_USER: cm9ib3Nob3A=
+  AMQP_PASS: cm9ib3Nob3AxMjM=
 
 ---
 ### Deployment
