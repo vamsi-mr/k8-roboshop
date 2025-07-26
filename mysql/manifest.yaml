@@ -1,12 +1,26 @@
+### Secret
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: mysql
+  labels:
+    component: mysql
+    project: roboshop
+    tier: database
+  type: Opaque
+  data:
+    MYSQL_ROOT_PASSWORD: "Um9ib1Nob3BAMQ==" 
+
+---
 ### Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb
+  name: mysql
   namespace: roboshop
   ## deployment labels
   labels:
-    component: mongodb
+    component: mysql
     project: roboshop
     tier: database
 spec:
@@ -14,38 +28,41 @@ spec:
   ## these are the labels replica set use to create pod replicas, this should match pod labels
   selector:
     matchLabels:
-      component: mongodb
+      component: mysql
       project: roboshop
       tier: database
   ## This is pod definition
   template:
     metadata:
       labels:
-        component: mongodb
+        component: mysql
         project: roboshop
         tier: database
     spec:
       containers:
-      - name: mongodb
-        image: mohanvamsi011/mongodb:v1
+      - name: mysql
+        image: mohanvamsi011/mysql:v1
+        envFrom:
+        - secretRef:
+            name: mysql
 
 ---
 ### Service
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb
+  name: mysql
   namespace: roboshop
   labels:
-    component: mongodb
+    component: mysql
     project: roboshop
     tier: database
 spec:
   selector:
-    component: mongodb
+    component: mysql
     project: roboshop
     tier: database
   ports:
     - protocol: TCP 
-      port: 27017   ## service port
-      targetPort: 27017  ## container port
+      port: 3306   ## service port
+      targetPort: 3306  ## container port
