@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name : payment
+  name: payment
   namespace: roboshop
   labels: 
     component: payment
@@ -16,41 +16,41 @@ data:
   AMQP_HOST: "rabbitmq"
 
 ---
+
 ### Secret
 apiVersion: v1
 kind: Secret
 metadata: 
   name: payment
+  namespace: roboshop
   labels:
     component: payment
     project: roboshop
     tier: app
 type: Opaque
 data: 
-  AMQP_USER: "cm9ib3Nob3A="
-  AMQP_PASS: "cm9ib3Nob3AxMjM="
+  AMQP_USER: "cm9ib3Nob3A="       
+  AMQP_PASS: "cm9ib3Nob3AxMjM="  
 
 ---
+
 ### Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment
   namespace: roboshop
-  ## deployment labels
   labels:
     component: payment
     project: roboshop
     tier: app
 spec:
   replicas: 1
-  ## these are the labels replica set use to create pod replicas, this should match pod labels
   selector:
     matchLabels:
       component: payment
       project: roboshop
       tier: app
-  ## This is pod definition
   template:
     metadata:
       labels:
@@ -68,6 +68,7 @@ spec:
             name: payment
 
 ---
+
 ### Service
 apiVersion: v1
 kind: Service
@@ -85,5 +86,5 @@ spec:
     tier: app
   ports:
     - protocol: TCP 
-      port: 8080  ## service port
-      targetPort: 8080  ## container port
+      port: 8080
+      targetPort: 8080
