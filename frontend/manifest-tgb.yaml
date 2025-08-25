@@ -12,6 +12,22 @@
 #   CART_ENDPOINT: "cart:8080" 
 #   DB_HOST: "mysql"
 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend
+  namespace: roboshop
+  labels: 
+    component: fronten
+    project: roboshop
+    tier: web
+data:
+  CATALOGUE_ENDPOINT: "catalogue:8080"
+  CART_ENDPOINT: "cart:8080"
+  USER_ENDPOINT: "user:8080"
+  SHIPPING_ENDPOINT: "shipping:8080"
+  PAYMENT_ENDPOINT: "payment:8080"
+
 ---
 ### Deployment
 apiVersion: apps/v1
@@ -43,9 +59,9 @@ spec:
       containers:
       - name: frontend
         image: mohanvamsi011/frontend:v1
-        # envFrom:
-        # - configMapRef:
-        #     name: frontend
+        envFrom:
+        - configMapRef:
+            name: frontend
 
 ---
 ### Service
