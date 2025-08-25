@@ -18,7 +18,7 @@ metadata:
   name: frontend
   namespace: roboshop
   labels: 
-    component: fronten
+    component: frontend
     project: roboshop
     tier: web
 data:
@@ -82,7 +82,7 @@ spec:
   ports:
     - protocol: TCP 
       port: 80  ## service port
-      targetPort: 80  ## container port
+      targetPort: 8080  ## container port
 
 ---
 apiVersion: elbv2.k8s.aws/v1beta1
