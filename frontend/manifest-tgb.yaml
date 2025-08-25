@@ -1,0 +1,81 @@
+# ### ConfigMap
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name : frontend
+#   namespace: roboshop
+#   labels: 
+#     component: frontend
+#     project: roboshop
+#     tier: web
+# data:
+#   CART_ENDPOINT: "cart:8080" 
+#   DB_HOST: "mysql"
+
+---
+### Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: roboshop
+  ## deployment labels
+  labels:
+    component: frontend
+    project: roboshop
+    tier: web
+spec:
+  replicas: 1
+  ## these are the labels replica set use to create pod replicas, this should match pod labels
+  selector:
+    matchLabels:
+      component: frontend
+      project: roboshop
+      tier: web
+  ## This is pod definition
+  template:
+    metadata:
+      labels:
+        component: frontend
+        project: roboshop
+        tier: web
+    spec:
+      containers:
+      - name: frontend
+        image: mohanvamsi011/frontend:v1
+        # envFrom:
+        # - configMapRef:
+        #     name: frontend
+
+---
+### Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: roboshop
+  labels:
+    component: frontend
+    project: roboshop
+    tier: web
+spec:
+  selector:
+    component: frontend
+    project: roboshop
+    tier: web
+  ports:
+    - protocol: TCP 
+      port: 80  ## service port
+      targetPort: 80  ## container port
+
+---
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: frontend
+  namespace: roboshop
+spec:
+  serviceRef: 
+    name: frontend
+    port: 80
+  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:025523569021:targetgroup/roboshop-dev-frontend/3ff67066f2c86e59
