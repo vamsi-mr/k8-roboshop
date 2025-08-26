@@ -95,4 +95,4 @@ spec:
   serviceRef: 
     name: frontend
     port: 80
-  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:025523569021:targetgroup/roboshop-dev-frontend/3ff67066f2c86e59
+  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:025523569021:targetgroup/roboshop-dev-frontend/c65d9d808a74d648
