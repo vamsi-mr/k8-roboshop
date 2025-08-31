@@ -58,7 +58,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: mohanvamsi011/frontend:v1
+        image: 025523569021.dkr.ecr.us-east-1.amazonaws.com/roboshop/frontend:1.0.0
         envFrom:
         - configMapRef:
             name: frontend
@@ -95,4 +95,5 @@ spec:
   serviceRef: 
     name: frontend
     port: 80
-  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:025523569021:targetgroup/roboshop-dev-frontend/c65d9d808a74d648
+  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:025523569021:targetgroup/roboshop-dev-frontend/b1e93e24ba0cba89
+
